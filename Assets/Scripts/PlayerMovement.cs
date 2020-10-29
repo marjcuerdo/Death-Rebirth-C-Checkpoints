@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
 	public Health hObj;
     public Score sObj;
+    public Timer tObj;
+
     //public NextLevel lObj;
 	SpriteRenderer sr; //
     Color srOrigColor; //
@@ -27,17 +29,28 @@ public class PlayerMovement : MonoBehaviour
     public bool advanceLevel = false;
     public bool isNewGame = true;
 
+    SpriteRenderer[] sprites;
+   // SpriteRenderer [] spriteRenderers = new List<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>());
+    //List<Color> colors = new List();
+
     public NextLevel lObj;
 
 	void Start() {
         sObj = GetComponent<Score>();
 		hObj = GetComponent<Health>();
-        //lObj = GetComponent<NextLevel>(); //
+        tObj = GetComponent<Timer>();
         lObj = GameObject.Find("Chest").GetComponent<NextLevel>();
 
 		sr = GetComponent<SpriteRenderer>();
+
         srOrigColor = sr.color;
 
+        sprites = GetComponentsInChildren<SpriteRenderer>();
+
+        /*for (int i=0; i < spriteRenderers.Count; ++i) {
+            colors.Add(spriteRenderers.material.color);
+            renderer.material.color = new Color(1,1,1,0.5f);
+        }*/
 	}
 
     // Update is called once per frame
@@ -61,9 +74,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (gotHurt) {
+
+            for (int i=0; i <sprites.Length; i++) {
+                sprites[i].color = new Color(1,1,1,0.5f);
+            }
             
-            sr.color = new Color(1,1,1,0.5f);
-        	
+            //sr.color = new Color(1,1,1,0.5f);
+        	/*for (int i=0; i < spriteRenderers.Count; ++i) {
+            
+                renderer.material.color = colors[i];
+            }*/
+
             StartCoroutine("FadeBack");
             //Debug.Log("Start Coroutine");
              // coroutine
@@ -73,7 +94,10 @@ public class PlayerMovement : MonoBehaviour
         if (gotHealth) {
             //sr.color = new Color(0,1,0);
             //sr.color = Color.white;
-            sr.color = new Color (254/255f, 215/255f, 0f, 1f);
+            for (int i=0; i <sprites.Length; i++) {
+                sprites[i].color = new Color (254/255f, 215/255f, 0f, 1f);
+            }
+            //sr.color = new Color (254/255f, 215/255f, 0f, 1f);
             //sr.color = new Color(1f, 0.92f, 0.016f, 1f);
             StartCoroutine("FadeBack");
             //Debug.Log("Start Coroutine");
@@ -96,13 +120,18 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator FadeBack() {
         if (gotHealth) {
             yield return new WaitForSeconds(0.5f);
-            sr.color = srOrigColor;
+            for (int i=0; i <sprites.Length; i++) {
+                sprites[i].color = srOrigColor;
+            }
             gotHealth = false;
         }
 
         if (gotHurt) {
             yield return new WaitForSeconds(0.5f);
-            sr.color = srOrigColor;
+            for (int i=0; i <sprites.Length; i++) {
+                sprites[i].color = srOrigColor;
+            }
+            //sr.color = srOrigColor;
             gotHurt = false;
         }
         //sr.color = new Color(0,1,0);
@@ -119,6 +148,10 @@ public class PlayerMovement : MonoBehaviour
         // Respawn to beginning of level when health is 0
         if (hObj.health == 0) {
 
+             // continue timer when player's health runs out
+            PlayerPrefs.SetFloat("TimeRem", tObj.timeRemaining); 
+            PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
+            
             isDead = true;
 
             // for CHECKPOINTS (possibly)
@@ -175,6 +208,9 @@ public class PlayerMovement : MonoBehaviour
             // Respawn player to beg of level
 
             //Debug.Log("player has died");
+            // continue timer when player dies
+            PlayerPrefs.SetFloat("TimeRem", tObj.timeRemaining); 
+            PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
             isDead = true;
 
             //this.transform.position = spawnPoint1.transform.position;
@@ -184,6 +220,8 @@ public class PlayerMovement : MonoBehaviour
         else if (col.gameObject.tag == "Finish") {
            // isNewGame = false;
             //Debug.Log("Setting score");
+            PlayerPrefs.SetFloat("TimeRem", tObj.timeRemaining);
+            PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
             PlayerPrefs.SetInt("Player Score", sObj.score);
             //Debug.Log("Score: " + sObj.score.ToString());
             //Debug.Log("Setting health");

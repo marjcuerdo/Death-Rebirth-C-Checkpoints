@@ -37,6 +37,7 @@ public class Health : MonoBehaviour
             gObj.isNewGame = true;
         }
 
+        // player's health relates to number of hearts displayed
     	if (health > numOfHearts) {
     		health = numOfHearts;
     	}
@@ -44,9 +45,9 @@ public class Health : MonoBehaviour
     	for (int i=0; i < hearts.Length; i++) {
 
     		if (i < health) {
-    			hearts[i].sprite = fullHeart;
+    			hearts[i].sprite = fullHeart; // use full heart image 
     		} else {
-    			hearts[i].sprite = emptyHeart;
+    			hearts[i].sprite = emptyHeart; // use empty heart when health decreated
     		}
 
     		if (i < numOfHearts) {
@@ -55,23 +56,24 @@ public class Health : MonoBehaviour
     			hearts[i].enabled = false;
     		}
     	}
-
-
     }
 
     void Start() {    
 
     }
 
+    // decrease health when taking damange
     public void TakeDamage(int damage) {
     	health -= damage;
     }
 
+    // add health with health pack
     public void AddHealth() {
         health += 1;
 
     }
 
+    // reset health on game exit
     public void OnApplicationQuit(){
          PlayerPrefs.SetInt("Player Health", 5);
 
