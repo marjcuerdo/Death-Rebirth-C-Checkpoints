@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     public Score sObj;
     public Timer tObj;
 
-    //public NextLevel lObj;
 	SpriteRenderer sr; //
     Color srOrigColor; //
 
@@ -30,8 +29,6 @@ public class PlayerMovement : MonoBehaviour
     public bool isNewGame = true;
 
     SpriteRenderer[] sprites;
-   // SpriteRenderer [] spriteRenderers = new List<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>());
-    //List<Color> colors = new List();
 
     public NextLevel lObj;
 
@@ -86,32 +83,24 @@ public class PlayerMovement : MonoBehaviour
             }*/
 
             StartCoroutine("FadeBack");
-            //Debug.Log("Start Coroutine");
-             // coroutine
-        	//gotHurt = false;
         }
 
         if (gotHealth) {
-            //sr.color = new Color(0,1,0);
-            //sr.color = Color.white;
             for (int i=0; i <sprites.Length; i++) {
                 sprites[i].color = new Color (254/255f, 215/255f, 0f, 1f);
             }
-            //sr.color = new Color (254/255f, 215/255f, 0f, 1f);
-            //sr.color = new Color(1f, 0.92f, 0.016f, 1f);
-            StartCoroutine("FadeBack");
-            //Debug.Log("Start Coroutine");
-            
+            StartCoroutine("FadeBack");         
         }
 
         // Restart level if death conditions are met
         if (isDead) {
             isDead = false;
-            //Application.LoadLevel(Application.loadedLevel);
+
             // reload current level / beginning of checkpoint
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
+        // when chest/finish point is reached, load next level
         if (advanceLevel) {
             lObj.LoadNextScene();
         }
@@ -135,9 +124,6 @@ public class PlayerMovement : MonoBehaviour
             //sr.color = srOrigColor;
             gotHurt = false;
         }
-        //sr.color = new Color(0,1,0);
-        
-        //Debug.Log("Finish Coroutine");
     }
 
     void FixedUpdate () 
@@ -178,7 +164,6 @@ public class PlayerMovement : MonoBehaviour
 
 
 		// When player gets hurt
-
 		else if (col.gameObject.tag == "Enemy") {
 
 			// Health decrease by 1
@@ -191,58 +176,38 @@ public class PlayerMovement : MonoBehaviour
 			//Debug.Log("got spike hurt");
 		}
 
-        // When player gets health
-
+        // When player gets health pack
         else if (col.gameObject.tag == "Health") {
 
             // Health decrease by 1
             hObj.AddHealth();
-            //Destroy(col.gameObject);
+
+            // make health pack inactive
+            col.gameObject.SetActive(false);
 
             gotHealth = true;
-
-            //Debug.Log("got healthpack");
         }
 
         // When player dies
         else if (col.gameObject.tag == "DeathZone") {
             // Respawn player to beg of level
 
-            //Debug.Log("player has died");
             // continue timer when player dies
             PlayerPrefs.SetFloat("TimeRem", tObj.timeRemaining); 
             PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
             isDead = true;
-
-            //this.transform.position = spawnPoint1.transform.position;
         }
 
         // When player reaches end of level
         else if (col.gameObject.tag == "Finish") {
-           // isNewGame = false;
-            //Debug.Log("Setting score");
+
             PlayerPrefs.SetFloat("TimeRem", tObj.timeRemaining);
             PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
             PlayerPrefs.SetInt("Player Score", sObj.score);
-            //Debug.Log("Score: " + sObj.score.ToString());
-            //Debug.Log("Setting health");
             PlayerPrefs.SetInt("Player Health", hObj.health);
-            //Debug.Log("Health: " + hObj.health.ToString());
-            //Debug.Log("finished setting");
 
             isNewGame = false;
-            //Debug.Log("not a new game");
             advanceLevel = true;
-           // Debug.Log("next level");
-            //Debug.Log("isNewGame 1: " + isNewGame.ToString());
-
-            //lObj.LoadNextScene();
-
-            //advanceLevel = true; 
-            
-            
-            //Debug.Log("End of level");
-            
         }
     }
 
