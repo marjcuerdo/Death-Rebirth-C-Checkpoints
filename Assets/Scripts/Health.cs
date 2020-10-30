@@ -16,16 +16,8 @@ public class Health : MonoBehaviour
 
 
     void Awake() {
-        // not available on first load
-        /*Debug.Log("getting player health");
-        health = PlayerPrefs.GetInt("Player Health");*/
+
         gObj = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        //Debug.Log("isNewGame 2: " + gObj.isNewGame.ToString());
-        /*if (gObj.isNewGame == true)
-        {
-                Debug.Log("This is a new level");
-                
-        } */
     }
 
     void Update() {
@@ -56,10 +48,6 @@ public class Health : MonoBehaviour
     			hearts[i].enabled = false;
     		}
     	}
-    }
-
-    void Start() {    
-
     }
 
     // decrease health when taking damange

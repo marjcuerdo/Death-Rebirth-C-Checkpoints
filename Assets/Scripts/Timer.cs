@@ -30,6 +30,12 @@ public class Timer : MonoBehaviour
 
 	void Update()
     {
+
+        if (gObj.isNewGame == false) {
+            timeInc = PlayerPrefs.GetFloat("TimeInc");
+            timeRemaining = PlayerPrefs.GetFloat("TimeRem");
+        }
+
     	// while timer is running
         if (timerIsRunning)
         {
