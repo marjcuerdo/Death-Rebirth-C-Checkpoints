@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 103082299}
   m_Layer: 0
   m_Name: Wind (4)
-  m_TagString: Untagged
+  m_TagString: Wind
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -304,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f145dc5e50571423f8a0cd683780eb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animator: {fileID: 0}
   animSpeed: 0.6
   gObj: {fileID: 0}
 --- !u!1 &108376785
@@ -571,7 +572,7 @@ GameObject:
   - component: {fileID: 195898499}
   m_Layer: 0
   m_Name: Wind (1)
-  m_TagString: Untagged
+  m_TagString: Wind
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -672,6 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f145dc5e50571423f8a0cd683780eb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animator: {fileID: 0}
   animSpeed: 0.6
   gObj: {fileID: 0}
 --- !u!1 &203649823
@@ -1224,7 +1226,7 @@ GameObject:
   - component: {fileID: 344103427}
   m_Layer: 0
   m_Name: Wind (3)
-  m_TagString: Untagged
+  m_TagString: Wind
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1325,6 +1327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f145dc5e50571423f8a0cd683780eb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animator: {fileID: 0}
   animSpeed: 0.6
   gObj: {fileID: 0}
 --- !u!1 &410228809
@@ -1589,7 +1592,7 @@ GameObject:
   - component: {fileID: 482260201}
   m_Layer: 0
   m_Name: Wind (2)
-  m_TagString: Untagged
+  m_TagString: Wind
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1690,6 +1693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f145dc5e50571423f8a0cd683780eb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animator: {fileID: 0}
   animSpeed: 0.6
   gObj: {fileID: 0}
 --- !u!1 &491663226
@@ -2227,6 +2231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 532162664}
+  windObjs: []
+  windAnimsArray: []
   windIsBlowing: 0
 --- !u!1 &558261036
 GameObject:
@@ -4023,7 +4029,7 @@ GameObject:
   - component: {fileID: 681184744}
   m_Layer: 0
   m_Name: Wind
-  m_TagString: Untagged
+  m_TagString: Wind
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4124,6 +4130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f145dc5e50571423f8a0cd683780eb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animator: {fileID: 0}
   animSpeed: 0.6
   gObj: {fileID: 0}
 --- !u!1 &777946472
@@ -5634,7 +5641,7 @@ GameObject:
   - component: {fileID: 1437052572}
   - component: {fileID: 1437052571}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: Canvas1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
