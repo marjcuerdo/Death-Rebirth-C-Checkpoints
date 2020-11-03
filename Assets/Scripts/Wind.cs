@@ -6,7 +6,7 @@ public class Wind : MonoBehaviour
 {
 	public CharacterController2D controller;
 
-	bool windIsBlowing = false;
+	public bool windIsBlowing = false;
 	bool timesUp = false;
 
     void Start()

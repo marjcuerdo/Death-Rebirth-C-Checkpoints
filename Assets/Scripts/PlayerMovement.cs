@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 	public Health hObj;
     public Score sObj;
     public Timer tObj;
+    public Wind wObj;
 
 	SpriteRenderer sr; //
     Color srOrigColor; //
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         sObj = GetComponent<Score>();
 		hObj = GetComponent<Health>();
         tObj = GetComponent<Timer>();
+        wObj = GetComponent<Wind>();
         lObj = GameObject.Find("Chest").GetComponent<NextLevel>();
 
 		sr = GetComponent<SpriteRenderer>();
@@ -105,6 +107,14 @@ public class PlayerMovement : MonoBehaviour
             lObj.LoadNextScene();
         }
 
+        // if wind is blowing on Level 5
+        if (wObj.windIsBlowing) {
+            for (int i=0; i <sprites.Length; i++) {
+                sprites[i].color = new Color (0f, 0f, 255f/255f, 1f);
+            }
+            StartCoroutine("FadeBack");   
+        }
+
     }
 
     IEnumerator FadeBack() {
@@ -123,6 +133,15 @@ public class PlayerMovement : MonoBehaviour
             }
             //sr.color = srOrigColor;
             gotHurt = false;
+        }
+
+        if (wObj.windIsBlowing) {
+            yield return new WaitForSeconds(3f);
+            for (int i=0; i <sprites.Length; i++) {
+                sprites[i].color = srOrigColor;
+            }
+            //sr.color = srOrigColor;
+            //gotHurt = false;
         }
     }
 
