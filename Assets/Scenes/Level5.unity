@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 103082296}
   - component: {fileID: 103082298}
   - component: {fileID: 103082297}
+  - component: {fileID: 103082299}
   m_Layer: 0
   m_Name: Wind (4)
   m_TagString: Wind
@@ -215,7 +216,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 103082295}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -268, y: -12, z: -2952}
+  m_LocalPosition: {x: -386, y: -36, z: -2952}
   m_LocalScale: {x: 32.8, y: 32.8, z: 32.8}
   m_Children: []
   m_Father: {fileID: 1437052570}
@@ -291,6 +292,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &103082299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103082295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e2e967cc1ce42b4b074237201a6265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &108376785
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,6 +566,7 @@ GameObject:
   - component: {fileID: 195898496}
   - component: {fileID: 195898498}
   - component: {fileID: 195898497}
+  - component: {fileID: 195898499}
   m_Layer: 0
   m_Name: Wind (1)
   m_TagString: Wind
@@ -568,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 195898495}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -191, y: 94, z: -2952}
+  m_LocalPosition: {x: -294, y: 218, z: -2952}
   m_LocalScale: {x: 32.8, y: 32.8, z: 32.8}
   m_Children: []
   m_Father: {fileID: 1437052570}
@@ -644,6 +658,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &195898499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195898495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e2e967cc1ce42b4b074237201a6265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &203649823
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,6 +1083,7 @@ GameObject:
   - component: {fileID: 344103424}
   - component: {fileID: 344103426}
   - component: {fileID: 344103425}
+  - component: {fileID: 344103427}
   m_Layer: 0
   m_Name: Wind (3)
   m_TagString: Wind
@@ -1072,7 +1099,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344103423}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 198, y: -1, z: -2952}
+  m_LocalPosition: {x: 306, y: -56, z: -2952}
   m_LocalScale: {x: 32.8, y: 32.8, z: 32.8}
   m_Children: []
   m_Father: {fileID: 1437052570}
@@ -1148,6 +1175,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &344103427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344103423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e2e967cc1ce42b4b074237201a6265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &410228809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,6 +1446,7 @@ GameObject:
   - component: {fileID: 482260198}
   - component: {fileID: 482260200}
   - component: {fileID: 482260199}
+  - component: {fileID: 482260201}
   m_Layer: 0
   m_Name: Wind (2)
   m_TagString: Wind
@@ -1422,7 +1462,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 482260197}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: -7, z: -2952}
+  m_LocalPosition: {x: 29, y: 34, z: -2952}
   m_LocalScale: {x: 32.8, y: 32.8, z: 32.8}
   m_Children: []
   m_Father: {fileID: 1437052570}
@@ -1498,6 +1538,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &482260201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482260197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e2e967cc1ce42b4b074237201a6265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &491663226
 GameObject:
   m_ObjectHideFlags: 0
@@ -4044,6 +4096,7 @@ GameObject:
   - component: {fileID: 681184743}
   - component: {fileID: 681184742}
   - component: {fileID: 681184741}
+  - component: {fileID: 681184744}
   m_Layer: 0
   m_Name: Wind
   m_TagString: Wind
@@ -4129,12 +4182,24 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681184740}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 119, y: 94, z: -2952}
+  m_LocalPosition: {x: 278, y: 235, z: -2952}
   m_LocalScale: {x: 32.8, y: 32.8, z: 32.8}
   m_Children: []
   m_Father: {fileID: 1437052570}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &681184744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681184740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e2e967cc1ce42b4b074237201a6265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &712896211
 GameObject:
   m_ObjectHideFlags: 0
