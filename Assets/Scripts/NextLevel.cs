@@ -26,6 +26,10 @@ public class NextLevel : MonoBehaviour
             SceneManager.LoadScene("Level4");
         } else if (m_Scene.name == "Level4") {
             SceneManager.LoadScene("Level5");
+        } else if (m_Scene.name == "Level5") {
+            SceneManager.LoadScene("WinScreen");
+        } else if (m_Scene.name == "WinScreen") {
+            SceneManager.LoadScene("Level1");
         } else
         { 
             Debug.Log("Loading nothing :(");

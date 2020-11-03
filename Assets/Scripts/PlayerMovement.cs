@@ -37,7 +37,9 @@ public class PlayerMovement : MonoBehaviour
         sObj = GetComponent<Score>();
 		hObj = GetComponent<Health>();
         tObj = GetComponent<Timer>();
-        wObj = GetComponent<Wind>();
+        if (SceneManager.GetActiveScene().name == "Level5") {
+            wObj = GetComponent<Wind>();
+        }
         lObj = GameObject.Find("Chest").GetComponent<NextLevel>();
 
 		sr = GetComponent<SpriteRenderer>();
@@ -108,11 +110,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // if wind is blowing on Level 5
-        if (wObj.windIsBlowing) {
-            for (int i=0; i <sprites.Length; i++) {
-                sprites[i].color = new Color (0f, 0f, 255f/255f, 1f);
+        if (SceneManager.GetActiveScene().name == "Level5") {
+            if (wObj.windIsBlowing != null && wObj.windIsBlowing) {
+                for (int i=0; i <sprites.Length; i++) {
+                    sprites[i].color = new Color (0f, 0f, 255f/255f, 1f);
+                }
+                StartCoroutine("FadeBack");   
             }
-            StartCoroutine("FadeBack");   
         }
 
     }
@@ -135,13 +139,15 @@ public class PlayerMovement : MonoBehaviour
             gotHurt = false;
         }
 
-        if (wObj.windIsBlowing) {
-            yield return new WaitForSeconds(3f);
-            for (int i=0; i <sprites.Length; i++) {
-                sprites[i].color = srOrigColor;
+        if (SceneManager.GetActiveScene().name == "Level5") {
+            if (wObj.windIsBlowing) {
+                yield return new WaitForSeconds(3f);
+                for (int i=0; i <sprites.Length; i++) {
+                    sprites[i].color = srOrigColor;
+                }
+                //sr.color = srOrigColor;
+                //gotHurt = false;
             }
-            //sr.color = srOrigColor;
-            //gotHurt = false;
         }
     }
 

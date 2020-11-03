@@ -26,7 +26,7 @@ public class Score : MonoBehaviour
             score = PlayerPrefs.GetInt("Player Score");
             //Debug.Log("again player score: " + PlayerPrefs.GetInt("Player Score").ToString());
         }
-    	scoreText.text = "Score: " + score.ToString();
+    	scoreText.text = score.ToString();
     }
 
     public void AddPoints(int points) {
