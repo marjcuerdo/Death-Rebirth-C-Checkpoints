@@ -12,8 +12,16 @@ public class ReverseScore : MonoBehaviour
 
     public ReversePlayerMovement gObj;
 
+    public ReverseHealth hObj;
+
     void Awake() {
         gObj = GameObject.Find("Player").GetComponent<ReversePlayerMovement>();
+        hObj = GameObject.Find("Player").GetComponent<ReverseHealth>();
+
+        if (gObj.isNewGame == false) {
+            score = PlayerPrefs.GetInt("Player Score");
+            //countToFifty = PlayerPrefs.GetInt("CountFifty"); // running more than once
+        }
     }
 
     void Start() {
@@ -21,17 +29,19 @@ public class ReverseScore : MonoBehaviour
     }
 
     void Update() {
-        if (gObj.isNewGame == false) {
-            //Debug.Log("getting player score: " + PlayerPrefs.GetInt("Player Score").ToString());
-            score = PlayerPrefs.GetInt("Player Score");
-            //Debug.Log("again player score: " + PlayerPrefs.GetInt("Player Score").ToString());
-        }
-    	scoreText.text = score.ToString();
+
+        scoreText.text = score.ToString();
     }
 
     public void AddPoints(int points) {
-    	score += points;
-    	//updatedScore = score;
+        score += points;
+
+        // add to health every 50 pts 
+        if (score % 50 == 0) {
+            //hObj.health += 1;
+            hObj.AddHealth();
+            Debug.Log("HEALTH: " + hObj.health);
+        }
     }
 
     public void OnApplicationQuit(){

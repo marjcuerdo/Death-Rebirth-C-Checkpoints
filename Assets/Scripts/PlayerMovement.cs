@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
 	float horizontalMove = 0f;
 	bool jump = false;
-	bool crouch = false;
+	//bool crouch = false;
 	bool gotHurt = false;
     bool isDead = false;
     bool gotHealth = false;
@@ -65,26 +65,21 @@ public class PlayerMovement : MonoBehaviour
         	//Debug.Log("jumping");
         }
 
-        if (Input.GetButtonDown("Crouch")) 
+        // for crouching
+        /*if (Input.GetButtonDown("Crouch")) 
         {
         	crouch = true;
         	//Debug.Log("crouch down");
         } else if (Input.GetButtonUp("Crouch")) {
         	crouch = false;
         	//Debug.Log("crouch up");
-        }
+        }*/
 
         if (gotHurt) {
 
             for (int i=0; i <sprites.Length; i++) {
                 sprites[i].color = new Color(1,1,1,0.5f);
             }
-            
-            //sr.color = new Color(1,1,1,0.5f);
-        	/*for (int i=0; i < spriteRenderers.Count; ++i) {
-            
-                renderer.material.color = colors[i];
-            }*/
 
             StartCoroutine("FadeBack");
         }
@@ -111,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
         // if wind is blowing on Level 5
         if (SceneManager.GetActiveScene().name == "Level5") {
-            if (wObj.windIsBlowing != null && wObj.windIsBlowing) {
+            if (wObj.windIsBlowing) {
                 for (int i=0; i <sprites.Length; i++) {
                     sprites[i].color = new Color (0f, 0f, 255f/255f, 1f);
                 }
@@ -183,7 +178,8 @@ public class PlayerMovement : MonoBehaviour
 			//Debug.Log("got coin");
 
             // Add points to player score
-            sObj.AddPoints(5);
+            sObj.AddPoints(10);
+
 			Destroy(col.gameObject);
 		} 
 
@@ -193,6 +189,8 @@ public class PlayerMovement : MonoBehaviour
 
 			// Health decrease by 1
 			hObj.TakeDamage(1);
+            Debug.Log("HEALTH: " + hObj.health);
+            hObj.tookDamage = true; /////
 
 			// Change player's color
 			gotHurt = true;
@@ -204,8 +202,10 @@ public class PlayerMovement : MonoBehaviour
         // When player gets health pack
         else if (col.gameObject.tag == "Health") {
 
+
             // Health decrease by 1
             hObj.AddHealth();
+            Debug.Log("HEALTH: " + hObj.health);
 
             // make health pack inactive
             col.gameObject.SetActive(false);
@@ -230,6 +230,8 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
             PlayerPrefs.SetInt("Player Score", sObj.score);
             PlayerPrefs.SetInt("Player Health", hObj.health);
+            PlayerPrefs.SetInt("Extra Hearts", hObj.currentExtraHearts);
+            PlayerPrefs.SetInt("Took Damage", (hObj.tookDamage ? 1 : 0));
 
             isNewGame = false;
             advanceLevel = true;

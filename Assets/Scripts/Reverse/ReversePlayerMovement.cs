@@ -6,23 +6,24 @@ using UnityEngine.SceneManagement;
 public class ReversePlayerMovement : MonoBehaviour
 {
 
-	public ReverseCharacterController controller;
+    public ReverseCharacterController controller;
 
-	public ReverseHealth hObj;
+    public ReverseHealth hObj;
     public ReverseScore sObj;
     public ReverseTimer tObj;
+    public Wind wObj; // not in Reverse
 
-	SpriteRenderer sr; //
+    SpriteRenderer sr; //
     Color srOrigColor; //
 
     public GameObject spawnPoint1;
 
-	public float runSpeed = 300;
+    public float runSpeed = 300;
 
-	float horizontalMove = 0f;
-	bool jump = false;
-	bool crouch = false;
-	bool gotHurt = false;
+    float horizontalMove = 0f;
+    bool jump = false;
+    //bool crouch = false;
+    bool gotHurt = false;
     bool isDead = false;
     bool gotHealth = false;
     public bool advanceLevel = false;
@@ -32,13 +33,16 @@ public class ReversePlayerMovement : MonoBehaviour
 
     public NextLevel lObj;
 
-	void Start() {
+    void Start() {
         sObj = GetComponent<ReverseScore>();
-		hObj = GetComponent<ReverseHealth>();
+        hObj = GetComponent<ReverseHealth>();
         tObj = GetComponent<ReverseTimer>();
+        if (SceneManager.GetActiveScene().name == "Level5") {
+            wObj = GetComponent<Wind>();
+        }
         lObj = GameObject.Find("Chest").GetComponent<NextLevel>();
 
-		sr = GetComponent<SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>();
 
         srOrigColor = sr.color;
 
@@ -48,7 +52,7 @@ public class ReversePlayerMovement : MonoBehaviour
             colors.Add(spriteRenderers.material.color);
             renderer.material.color = new Color(1,1,1,0.5f);
         }*/
-	}
+    }
 
     // Update is called once per frame
     void Update()
@@ -57,30 +61,27 @@ public class ReversePlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump")) 
         {
-        	jump = true;
-        	//Debug.Log("jumping");
+            jump = true;
+            //Debug.Log("jumping");
         }
 
+        // for crouching
+        /*
         if (Input.GetButtonDown("Crouch")) 
         {
-        	crouch = true;
-        	//Debug.Log("crouch down");
+            crouch = true;
+            //Debug.Log("crouch down");
         } else if (Input.GetButtonUp("Crouch")) {
-        	crouch = false;
-        	//Debug.Log("crouch up");
-        }
+            crouch = false;
+            //Debug.Log("crouch up");
+        }*/
 
         if (gotHurt) {
 
             for (int i=0; i <sprites.Length; i++) {
                 sprites[i].color = new Color(1,1,1,0.5f);
             }
-            
-            //sr.color = new Color(1,1,1,0.5f);
-        	/*for (int i=0; i < spriteRenderers.Count; ++i) {
-            
-                renderer.material.color = colors[i];
-            }*/
+        
 
             StartCoroutine("FadeBack");
         }
@@ -105,6 +106,16 @@ public class ReversePlayerMovement : MonoBehaviour
             lObj.LoadNextScene();
         }
 
+        // if wind is blowing on Level 5
+        if (SceneManager.GetActiveScene().name == "Level5") {
+            if (wObj.windIsBlowing != null && wObj.windIsBlowing) {
+                for (int i=0; i <sprites.Length; i++) {
+                    sprites[i].color = new Color (0f, 0f, 255f/255f, 1f);
+                }
+                StartCoroutine("FadeBack");   
+            }
+        }
+
     }
 
     IEnumerator FadeBack() {
@@ -124,13 +135,24 @@ public class ReversePlayerMovement : MonoBehaviour
             //sr.color = srOrigColor;
             gotHurt = false;
         }
+
+        if (SceneManager.GetActiveScene().name == "Level5") {
+            if (wObj.windIsBlowing) {
+                yield return new WaitForSeconds(3f);
+                for (int i=0; i <sprites.Length; i++) {
+                    sprites[i].color = srOrigColor;
+                }
+                //sr.color = srOrigColor;
+                //gotHurt = false;
+            }
+        }
     }
 
     void FixedUpdate () 
     {
-    	// Move our character
-    	controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
-    	jump = false;
+        // Move our character
+        controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
+        jump = false;
 
         // Respawn to beginning of level when health is 0
         if (hObj.health == 0) {
@@ -147,40 +169,45 @@ public class ReversePlayerMovement : MonoBehaviour
             //reset level
 
         }
-    	
+        
     }
 
     // Player triggers with colliders
 
     void OnTriggerEnter2D(Collider2D col) {
 
-    	if(col.gameObject.tag == "Coins") {
-			//Debug.Log("got coin");
+        if(col.gameObject.tag == "Coins") {
+            //Debug.Log("got coin");
 
             // Add points to player score
-            sObj.AddPoints(5);
-			Destroy(col.gameObject);
-		} 
+            sObj.AddPoints(10);
+
+            Destroy(col.gameObject);
+        } 
 
 
-		// When player gets hurt
-		else if (col.gameObject.tag == "Enemy") {
+        // When player gets hurt
+        else if (col.gameObject.tag == "Enemy") {
 
-			// Health decrease by 1
-			hObj.TakeDamage(1);
+            // Health decrease by 1
+            hObj.TakeDamage(1);
+            Debug.Log("HEALTH: " + hObj.health);
+            hObj.tookDamage = true; /////
 
-			// Change player's color
-			gotHurt = true;
+            // Change player's color
+            gotHurt = true;
 
 
-			//Debug.Log("got spike hurt");
-		}
+            //Debug.Log("got spike hurt");
+        }
 
         // When player gets health pack
         else if (col.gameObject.tag == "Health") {
 
+
             // Health decrease by 1
             hObj.AddHealth();
+            Debug.Log("HEALTH: " + hObj.health);
 
             // make health pack inactive
             col.gameObject.SetActive(false);
@@ -205,6 +232,10 @@ public class ReversePlayerMovement : MonoBehaviour
             PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
             PlayerPrefs.SetInt("Player Score", sObj.score);
             PlayerPrefs.SetInt("Player Health", hObj.health);
+            PlayerPrefs.SetInt("Extra Hearts", hObj.currentExtraHearts);
+            PlayerPrefs.SetInt("JCounter", 0);
+            PlayerPrefs.SetInt("KCounter", 0);
+            PlayerPrefs.SetInt("Took Damage", (hObj.tookDamage ? 1 : 0));
 
             isNewGame = false;
             advanceLevel = true;

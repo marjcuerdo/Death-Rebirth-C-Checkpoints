@@ -15,13 +15,13 @@ public class ReverseTimer : MonoBehaviour
     void Awake() {
     	gObj = GameObject.Find("Player").GetComponent<ReversePlayerMovement>(); // instantiate to access Player
 
-    	//if (gObj.isNewGame == false) {
+    	if (gObj.isNewGame == false) {
             //Debug.Log("getting time: " + PlayerPrefs.GetFloat("TimeInc").ToString());
             // get current time
             timeInc = PlayerPrefs.GetFloat("TimeInc");
             timeRemaining = PlayerPrefs.GetFloat("TimeRem");
             //Debug.Log("time again: " + PlayerPrefs.GetFloat("TimeInc").ToString());
-        //}
+        }
     }
 
 	void Start() {
@@ -31,10 +31,10 @@ public class ReverseTimer : MonoBehaviour
 	void Update()
     {
 
-        if (gObj.isNewGame == false) {
+        /*if (gObj.isNewGame == false) {
             timeInc = PlayerPrefs.GetFloat("TimeInc");
             timeRemaining = PlayerPrefs.GetFloat("TimeRem");
-        }
+        }*/
 
     	// while timer is running
         if (timerIsRunning)
