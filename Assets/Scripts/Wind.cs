@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Wind : MonoBehaviour
 {
+
+	public AudioSource windAudio;
+
 	public CharacterController2D controller;
 
 	public GameObject[] windObjs;
@@ -24,6 +27,7 @@ public class Wind : MonoBehaviour
 	void FixedUpdate() {
 		if (windIsBlowing) {
 			//Debug.Log("adding wind");
+			windAudio.Play();
 		    controller.GetComponent<Rigidbody2D>().AddForce(new Vector3(-50f,0f,0f), ForceMode2D.Force);
 		}
     }

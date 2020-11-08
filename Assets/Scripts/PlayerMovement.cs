@@ -33,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
     public NextLevel lObj;
 
+    public AudioSource coinAudio;
+    public AudioSource deathAudio;
+    
+
 	void Start() {
         sObj = GetComponent<Score>();
 		hObj = GetComponent<Health>();
@@ -110,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
                 for (int i=0; i <sprites.Length; i++) {
                     sprites[i].color = new Color (0f, 0f, 255f/255f, 1f);
                 }
+
                 StartCoroutine("FadeBack");   
             }
         }
@@ -136,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Level5") {
             if (wObj.windIsBlowing) {
+
                 yield return new WaitForSeconds(3f);
                 for (int i=0; i <sprites.Length; i++) {
                     sprites[i].color = srOrigColor;
@@ -179,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
 
             // Add points to player score
             sObj.AddPoints(10);
-
+            coinAudio.Play();
 			Destroy(col.gameObject);
 		} 
 
@@ -220,6 +226,7 @@ public class PlayerMovement : MonoBehaviour
             // continue timer when player dies
             PlayerPrefs.SetFloat("TimeRem", tObj.timeRemaining); 
             PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
+            deathAudio.Play();
             isDead = true;
         }
 
