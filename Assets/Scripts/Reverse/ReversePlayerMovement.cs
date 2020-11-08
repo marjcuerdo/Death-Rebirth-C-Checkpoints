@@ -108,7 +108,7 @@ public class ReversePlayerMovement : MonoBehaviour
 
         // if wind is blowing on Level 5
         if (SceneManager.GetActiveScene().name == "Level5") {
-            if (wObj.windIsBlowing != null && wObj.windIsBlowing) {
+            if (wObj.windIsBlowing) {
                 for (int i=0; i <sprites.Length; i++) {
                     sprites[i].color = new Color (0f, 0f, 255f/255f, 1f);
                 }
