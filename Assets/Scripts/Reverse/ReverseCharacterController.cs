@@ -18,6 +18,9 @@ public class ReverseCharacterController : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 
+
+	public AudioSource jumpAudio;
+
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -100,6 +103,7 @@ public class ReverseCharacterController : MonoBehaviour
 			// Add a vertical force to the player.
 			m_Grounded = false;
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			jumpAudio.Play();
 		}
 	}
 

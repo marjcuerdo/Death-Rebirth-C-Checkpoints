@@ -33,6 +33,9 @@ public class ReversePlayerMovement : MonoBehaviour
 
     public NextLevel lObj;
 
+    public AudioSource coinAudio;
+    public AudioSource deathAudio;
+
     void Start() {
         sObj = GetComponent<ReverseScore>();
         hObj = GetComponent<ReverseHealth>();
@@ -181,7 +184,7 @@ public class ReversePlayerMovement : MonoBehaviour
 
             // Add points to player score
             sObj.AddPoints(10);
-
+            coinAudio.Play();
             Destroy(col.gameObject);
         } 
 
@@ -222,6 +225,7 @@ public class ReversePlayerMovement : MonoBehaviour
             // continue timer when player dies
             PlayerPrefs.SetFloat("TimeRem", tObj.timeRemaining); 
             PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
+            deathAudio.Play();
             isDead = true;
         }
 

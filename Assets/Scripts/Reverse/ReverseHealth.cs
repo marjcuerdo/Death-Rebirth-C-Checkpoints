@@ -24,6 +24,10 @@ public class ReverseHealth : MonoBehaviour
     public int k = 0;
     public bool tookDamage = false;
 
+
+    public AudioSource powerUpAudio;
+    public AudioSource damageAudio;
+
     void Awake() {
 
         gObj = GameObject.Find("Player").GetComponent<ReversePlayerMovement>();
@@ -105,7 +109,7 @@ public class ReverseHealth : MonoBehaviour
     // decrease health when taking damange
     public void TakeDamage(int damage) {
         health -= damage;
-        //
+        damageAudio.Play();
         Debug.Log("HEALTH: " + health);
     }
 
@@ -113,6 +117,7 @@ public class ReverseHealth : MonoBehaviour
     public void AddHealth() {
         if (health < 8) { // 8 is max health with bonus
             health += 1;
+            powerUpAudio.Play();
         }
 
     }
