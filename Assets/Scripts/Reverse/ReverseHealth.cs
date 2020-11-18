@@ -24,7 +24,6 @@ public class ReverseHealth : MonoBehaviour
     public int k = 0;
     public bool tookDamage = false;
 
-
     public AudioSource powerUpAudio;
     public AudioSource damageAudio;
 
@@ -36,7 +35,7 @@ public class ReverseHealth : MonoBehaviour
             //health = PlayerPrefs.GetInt("Player Health");
             currentExtraHearts = PlayerPrefs.GetInt("Extra Hearts");
             health = PlayerPrefs.GetInt("Player Health");
-            Debug.Log("getting health: " + health);
+            //Debug.Log("getting health: " + health);
             //Debug.Log("getting extra");
             //j = PlayerPrefs.GetInt("JCounter");
             //k = PlayerPrefs.GetInt("KCounter");
@@ -53,7 +52,7 @@ public class ReverseHealth : MonoBehaviour
 
         if (health > numOfHearts) {
             currentExtraHearts = health - numOfHearts; 
-            Debug.Log("currentExtraHearts: " + currentExtraHearts);
+            //Debug.Log("currentExtraHearts: " + currentExtraHearts);
 
         } else {
             currentExtraHearts = 0;
@@ -68,7 +67,12 @@ public class ReverseHealth : MonoBehaviour
                     while ( (j < currentExtraHearts) && ( ((i+j+1) >= 0) && ( (i+j+1) < hearts.Count ) ) ) {
                         hearts[i+j+1].sprite = extraHeart;
 
-                        hearts[i+j+1].enabled = true; // running wrong
+                        hearts[i+j+1].enabled = true; 
+
+                        if (i <= 4) {
+                            hearts[i].sprite = fullHeart;
+                        }
+
                         j+=1;
                     }
                     // nothing happens to hearts afterwards
@@ -77,18 +81,15 @@ public class ReverseHealth : MonoBehaviour
                     }
 
                 } else {
-                    Debug.Log("calling damage");
+                    //Debug.Log("calling damage");
                     while ( (k < currentExtraHearts) && ( ((i+k+2) >= 0) && ( (i+k+2) < hearts.Count) )) {
                         hearts[i+k+2].enabled = false;
                         k+=1;
                     }
                 }
-
-                
-            } //else if (i < health)  {//&& (health < maxHearts) {
-            else if ( i < health )  {
+            } 
+            else if ( i < health) {
                 hearts[i].sprite = fullHeart; // use full heart image 
-
             } else {
                 // when damage is being done
 
@@ -98,11 +99,16 @@ public class ReverseHealth : MonoBehaviour
                 } else if (i > 4) { // selects extra hearts and turns them off
                     hearts[i].enabled = false;
                 }
-            } 
+                
+            }
+
+            //Debug.Log(i + " " + hearts[i].sprite.ToString()); 
         }
         j = 0;
         k = 0;
+        
         tookDamage = false;
+        
 
     }
 
@@ -110,6 +116,7 @@ public class ReverseHealth : MonoBehaviour
     public void TakeDamage(int damage) {
         health -= damage;
         damageAudio.Play();
+
         Debug.Log("HEALTH: " + health);
     }
 

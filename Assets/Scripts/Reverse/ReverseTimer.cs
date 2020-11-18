@@ -6,7 +6,7 @@ using UnityEngine;
 public class ReverseTimer : MonoBehaviour
 {
 	public TextMeshProUGUI timeText;
-	public float timeRemaining = 300; 
+	public float timeRemaining = 600; 
 	public float timeInc = 0;
     public bool timerIsRunning = false;
 
@@ -40,13 +40,13 @@ public class ReverseTimer : MonoBehaviour
         if (timerIsRunning)
         {
         	// when 5 mins or 300 secs aren't up yet
-            if (timeRemaining > 1 )
-            {
+            //if (timeRemaining > 1 )
+            //{
                 timeRemaining -= Time.deltaTime; // decrement from 5 mins/300 secs
                 timeInc += Time.deltaTime; // increment to current playing time
                 DisplayTime("Current playing time: ", timeInc); // continuously update time
-            }
-            else
+            //}
+            /*else
             {
                 //Debug.Log("Time has been met!");
                 timeInc += Time.deltaTime; // continue incrementing after 5 mins
@@ -54,7 +54,7 @@ public class ReverseTimer : MonoBehaviour
                 DisplayTime("Required play time met! ", timeInc); // notify user time's up
                 timeRemaining = 0;
                 //timerIsRunning = false; // use to stop timer when time is met
-            }
+            }*/
         }
     }
 
@@ -71,7 +71,7 @@ public class ReverseTimer : MonoBehaviour
 
     // reset timer when exit game
     public void OnApplicationQuit(){
-         PlayerPrefs.SetFloat("TimeRem", 300);
+         PlayerPrefs.SetFloat("TimeRem", 600);
          PlayerPrefs.SetFloat("TimeInc", 0);
          //Debug.Log("Reset score");
     }

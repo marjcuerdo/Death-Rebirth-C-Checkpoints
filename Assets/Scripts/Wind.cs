@@ -5,12 +5,14 @@ using UnityEngine;
 public class Wind : MonoBehaviour
 {
 
-	//public AudioSource windAudio;
+	public AudioSource windAudio;
 
 	public CharacterController2D controller;
 
 	public GameObject[] windObjs;
 	public Animator[] windAnimsArray;
+
+	public float windSpeed = 1f;
 
 	public bool windIsBlowing = false;
 	bool timesUp = false;
@@ -30,6 +32,10 @@ public class Wind : MonoBehaviour
 			//windAudio.Play();
 		    controller.GetComponent<Rigidbody2D>().AddForce(new Vector3(-50f,0f,0f), ForceMode2D.Force);
 		}
+
+		if (!windIsBlowing) {
+			windAudio.Play();
+		}
     }
 
     IEnumerator BlowingWind() {
@@ -45,7 +51,9 @@ public class Wind : MonoBehaviour
 		    	windAnimsArray[i].enabled = true;
 		    }*/
 		    foreach (GameObject go in windObjs) {
+		    	//go.GetComponent<Animator>().speed = windSpeed;
     			go.GetComponent<Animator>().enabled = true;
+    			go.GetComponent<Animator>().Play("GustAnim", 0, 0.0f);
     		}
 		    yield return new WaitForSeconds(1);
 		    Debug.Log("TIMER 4");
@@ -57,7 +65,11 @@ public class Wind : MonoBehaviour
 		    	windAnimsArray[i].enabled = false;
 		    }*/
 		    foreach (GameObject go in windObjs) {
-    			go.GetComponent<Animator>().enabled = false;
+		    	//go.GetComponent<Animator>().speed = 0;
+		    	//go.GetComponent<Animator>().CrossFade("GustAnim",0);
+		    	go.GetComponent<Animator>().enabled = false;
+
+    			//go.GetComponent<Animator>().enabled = false;
     		}
 		    windIsBlowing = false;
 		}

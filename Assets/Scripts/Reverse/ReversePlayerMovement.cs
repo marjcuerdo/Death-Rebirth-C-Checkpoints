@@ -11,7 +11,7 @@ public class ReversePlayerMovement : MonoBehaviour
     public ReverseHealth hObj;
     public ReverseScore sObj;
     public ReverseTimer tObj;
-    public Wind wObj; // not in Reverse
+    public Wind wObj;
 
     SpriteRenderer sr; //
     Color srOrigColor; //
@@ -28,15 +28,51 @@ public class ReversePlayerMovement : MonoBehaviour
     bool gotHealth = false;
     public bool advanceLevel = false;
     public bool isNewGame = true;
+        public bool lvlSavePointExists = false;
+
+    public Vector3 levelRespawn;
 
     SpriteRenderer[] sprites;
 
     public NextLevel lObj;
 
+    public ReverseSaveGame sgObj;
+    public ReverseResetLevel rObj;
+
     public AudioSource coinAudio;
     public AudioSource deathAudio;
 
+    public Animator anim;
+
+    public ReverseCharacterController cObj;
+    
+
+    void Awake() {
+        sgObj = GameObject.Find("God").GetComponent<ReverseSaveGame>();
+        rObj = GameObject.Find("God").GetComponent<ReverseResetLevel>();
+
+        // if game is new then use original respawn point when player dies
+        if (isNewGame) {
+            levelRespawn = this.transform.position;
+            sgObj.spawnPoint1 = this.transform.position;
+            isNewGame = false;
+        } else if (lvlSavePointExists) {
+
+            // only if save exists for level
+            // if a save exists, put player in last saved position
+                this.transform.position = sgObj.spawnPoint1;
+        } else {
+            levelRespawn = this.transform.position;
+            //sgObj.spawnPoint1 = this.transform.position;
+            isNewGame = false;
+        }
+    }
+
     void Start() {
+        sgObj = GameObject.Find("God").GetComponent<ReverseSaveGame>();
+        rObj = GameObject.Find("God").GetComponent<ReverseResetLevel>();
+        cObj = GetComponent<ReverseCharacterController>();
+        anim = GetComponent<Animator>();
         sObj = GetComponent<ReverseScore>();
         hObj = GetComponent<ReverseHealth>();
         tObj = GetComponent<ReverseTimer>();
@@ -66,11 +102,21 @@ public class ReversePlayerMovement : MonoBehaviour
         {
             jump = true;
             //Debug.Log("jumping");
+
+        } 
+
+        if (horizontalMove == 0 && cObj.m_Grounded) {
+            anim.SetBool("isRunning", false);
+        } else if (horizontalMove > 0 && !cObj.m_Grounded){
+            anim.SetBool("isRunning", false);
+        } else {
+            anim.SetBool("isRunning", true);
         }
 
+
+
         // for crouching
-        /*
-        if (Input.GetButtonDown("Crouch")) 
+        /*if (Input.GetButtonDown("Crouch")) 
         {
             crouch = true;
             //Debug.Log("crouch down");
@@ -84,7 +130,6 @@ public class ReversePlayerMovement : MonoBehaviour
             for (int i=0; i <sprites.Length; i++) {
                 sprites[i].color = new Color(1,1,1,0.5f);
             }
-        
 
             StartCoroutine("FadeBack");
         }
@@ -98,14 +143,23 @@ public class ReversePlayerMovement : MonoBehaviour
 
         // Restart level if death conditions are met
         if (isDead) {
-            isDead = false;
+            if (lvlSavePointExists) {
+                this.transform.position = sgObj.spawnPoint1; 
+            } else {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
 
-            // reload current level / beginning of checkpoint
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            rObj.Reset();
+            isDead = false;
         }
 
         // when chest/finish point is reached, load next level
         if (advanceLevel) {
+            // reset level respawn point
+            rObj.restartedLevel = false;
+            // remember that savepoint doesn't exist for the next level yet
+            lvlSavePointExists = false;
+
             lObj.LoadNextScene();
         }
 
@@ -115,6 +169,7 @@ public class ReversePlayerMovement : MonoBehaviour
                 for (int i=0; i <sprites.Length; i++) {
                     sprites[i].color = new Color (0f, 0f, 255f/255f, 1f);
                 }
+
                 StartCoroutine("FadeBack");   
             }
         }
@@ -141,6 +196,7 @@ public class ReversePlayerMovement : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Level5") {
             if (wObj.windIsBlowing) {
+
                 yield return new WaitForSeconds(3f);
                 for (int i=0; i <sprites.Length; i++) {
                     sprites[i].color = srOrigColor;
@@ -185,7 +241,9 @@ public class ReversePlayerMovement : MonoBehaviour
             // Add points to player score
             sObj.AddPoints(10);
             coinAudio.Play();
-            Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
+            //Destroy(col.gameObject);
+            //col.GetComponent<SpriteRenderer>().enabled = false;
         } 
 
 
@@ -237,12 +295,20 @@ public class ReversePlayerMovement : MonoBehaviour
             PlayerPrefs.SetInt("Player Score", sObj.score);
             PlayerPrefs.SetInt("Player Health", hObj.health);
             PlayerPrefs.SetInt("Extra Hearts", hObj.currentExtraHearts);
-            PlayerPrefs.SetInt("JCounter", 0);
-            PlayerPrefs.SetInt("KCounter", 0);
             PlayerPrefs.SetInt("Took Damage", (hObj.tookDamage ? 1 : 0));
+
+            if (SceneManager.GetActiveScene().name == "WinScreen") {
+                PlayerPrefs.SetFloat("TimeRem", 300);
+                PlayerPrefs.SetFloat("TimeInc", 0);
+            }
 
             isNewGame = false;
             advanceLevel = true;
+        }
+
+        else if (col.gameObject.tag == "Checkpoint") {
+            sgObj.Save(col.gameObject.transform.position);
+            col.enabled = false;
         }
     }
 
