@@ -62,7 +62,6 @@ public class ResetLevel : MonoBehaviour
              sgObj.allMovingObjects[i].transform.position = sgObj.positions[i];
              //Debug.Log(sgObj.positions[i]);
 
-         }
-        
+         }  
     }
 }

@@ -26,6 +26,9 @@ public class ReverseResetLevel : MonoBehaviour
     	// continue timer when player's health runs out
         PlayerPrefs.SetFloat("TimeRem", tObj.timeRemaining); 
         PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
+        PlayerPrefs.SetInt("Player Health", 5);
+        PlayerPrefs.SetInt("Player Score", 0);
+        PlayerPrefs.SetInt("Extra Hearts", 0);
         restartedLevel = true; // used to keep timer running after level restarts
     	SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -30,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
     public bool isNewGame = true;
     public bool lvlSavePointExists = false;
 
+    public int deathCounter = 0;
+    public TextMeshProUGUI deathText;
+
     public Vector3 levelRespawn;
 
     SpriteRenderer[] sprites;
@@ -50,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake() {
         sgObj = GameObject.Find("God").GetComponent<SaveGame>();
         rObj = GameObject.Find("God").GetComponent<ResetLevel>();
-
+        deathCounter = PlayerPrefs.GetInt("Player Deaths"); ////////////////////
         // if game is new then use original respawn point when player dies
         if (isNewGame) {
             levelRespawn = this.transform.position;
@@ -113,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isRunning", true);
         }
 
-
+        deathText.text = deathCounter.ToString(); // display current # deaths
 
         // for crouching
         /*if (Input.GetButtonDown("Crouch")) 
@@ -143,6 +148,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Restart level if death conditions are met
         if (isDead) {
+            deathCounter += 1; // increment death
+            PlayerPrefs.SetInt("Player Deaths", deathCounter);
+
             if (lvlSavePointExists) {
                 this.transform.position = sgObj.spawnPoint1; 
             } else {
@@ -294,6 +302,7 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetFloat("TimeInc", tObj.timeInc);
             PlayerPrefs.SetInt("Player Score", sObj.score);
             PlayerPrefs.SetInt("Player Health", hObj.health);
+            PlayerPrefs.SetInt("Player Deaths", deathCounter);
             PlayerPrefs.SetInt("Extra Hearts", hObj.currentExtraHearts);
             PlayerPrefs.SetInt("Took Damage", (hObj.tookDamage ? 1 : 0));
 
@@ -326,5 +335,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+        // reset deaths when exit game
+    public void OnApplicationQuit(){
+         PlayerPrefs.SetInt("Player Deaths", 0);
+    }
 
 }
