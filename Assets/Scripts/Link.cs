@@ -5,21 +5,15 @@ using UnityEngine.UI;
 public class Link : MonoBehaviour 
 {
 
-	public void OpenPretestSurvey()
+	public void OpenPostTestSurvey()
 	{
 		#if !UNITY_EDITOR
-		openWindow("https://ucsantacruz.co1.qualtrics.com/jfe/form/SV_3lAQYV4CwPrbcUZ");
-		#endif
-	}
-
-	public void OpenPosttestSurvey()
-	{
-		#if !UNITY_EDITOR
-		openWindow("https://www.marjcuerdo.com");
+		openWindow("https://ucsantacruz.co1.qualtrics.com/jfe/form/SV_55SOTDq58E3HXMh");
 		#endif
 	}
 
 	[DllImport("__Internal")]
 	private static extern void openWindow(string url);
+	
 
 }

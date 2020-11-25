@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
 	public TextMeshProUGUI timeText;
-	public float timeRemaining = 600; 
+	public float timeRemaining = 900; 
 	public float timeInc = 0;
     public bool timerIsRunning = false;
 
     public PlayerMovement gObj; 
+    public Score sObj;
+    public Health hObj;
 
     void Awake() {
     	gObj = GameObject.Find("Player").GetComponent<PlayerMovement>(); // instantiate to access Player
+        sObj = GameObject.Find("Player").GetComponent<Score>();
+        hObj = GameObject.Find("Player").GetComponent<Health>();
 
     	//if (gObj.isNewGame == false) {
             //Debug.Log("getting time: " + PlayerPrefs.GetFloat("TimeInc").ToString());
@@ -55,6 +60,22 @@ public class Timer : MonoBehaviour
                 timeRemaining = 0;
                 //timerIsRunning = false; // use to stop timer when time is met
             }*/
+            // if (timeRemaining <= 0) {
+            //     PlayerPrefs.SetFloat("TimeRem", timeRemaining);
+            //     PlayerPrefs.SetFloat("TimeInc", timeInc);
+            //     PlayerPrefs.SetInt("Player Score", sObj.score);
+            //     PlayerPrefs.SetInt("Player Health", hObj.health);
+            //     PlayerPrefs.SetInt("Player Deaths", gObj.deathCounter);
+            //     SceneManager.LoadScene("TimeUpScreen");
+            // }
+        }
+        if (timeRemaining <= 0) {
+                PlayerPrefs.SetFloat("TimeRem", timeRemaining);
+                PlayerPrefs.SetFloat("TimeInc", timeInc);
+                PlayerPrefs.SetInt("Player Score", sObj.score);
+                PlayerPrefs.SetInt("Player Health", hObj.health);
+                PlayerPrefs.SetInt("Player Deaths", gObj.deathCounter);
+                SceneManager.LoadScene("TimeUpScreen");
         }
     }
 
@@ -71,7 +92,7 @@ public class Timer : MonoBehaviour
 
     // reset timer when exit game
     public void OnApplicationQuit(){
-         PlayerPrefs.SetFloat("TimeRem", 600);
+         PlayerPrefs.SetFloat("TimeRem", 900);
          PlayerPrefs.SetFloat("TimeInc", 0);
          //Debug.Log("Reset score");
     }
