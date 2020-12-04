@@ -7617,6 +7617,7 @@ MonoBehaviour:
   deathAudio: {fileID: 1243962451}
   anim: {fileID: 0}
   cObj: {fileID: 0}
+  levelReached: 1
 --- !u!50 &1243962461
 Rigidbody2D:
   serializedVersion: 4

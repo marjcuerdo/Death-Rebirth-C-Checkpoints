@@ -9603,6 +9603,7 @@ MonoBehaviour:
   deathAudio: {fileID: 1401195842}
   anim: {fileID: 0}
   cObj: {fileID: 0}
+  levelReached: 2
 --- !u!1 &1405269772
 GameObject:
   m_ObjectHideFlags: 0

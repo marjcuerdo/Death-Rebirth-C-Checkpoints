@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     public CharacterController2D cObj;
     
+    public int levelReached = 1;
 
     void Awake() {
         sgObj = GameObject.Find("God").GetComponent<SaveGame>();
@@ -81,6 +82,18 @@ public class PlayerMovement : MonoBehaviour
         sObj = GetComponent<Score>();
 		hObj = GetComponent<Health>();
         tObj = GetComponent<Timer>();
+        if (SceneManager.GetActiveScene().name == "Level1") {
+            PlayerPrefs.SetInt("Level Reached", 1);
+        } else if (SceneManager.GetActiveScene().name == "Level2") {
+            PlayerPrefs.SetInt("Level Reached", 2);
+        } else if (SceneManager.GetActiveScene().name == "Level3") {
+            PlayerPrefs.SetInt("Level Reached", 3);
+        } else if (SceneManager.GetActiveScene().name == "Level4") {
+            PlayerPrefs.SetInt("Level Reached", 4);
+        } else if (SceneManager.GetActiveScene().name == "Level5") {
+            PlayerPrefs.SetInt("Level Reached", 5);
+        }
+
         if (SceneManager.GetActiveScene().name == "Level5") {
             wObj = GetComponent<Wind>();
         }
@@ -307,7 +320,7 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetInt("Took Damage", (hObj.tookDamage ? 1 : 0));
 
             if (SceneManager.GetActiveScene().name == "WinScreen") {
-                PlayerPrefs.SetFloat("TimeRem", 300);
+                PlayerPrefs.SetFloat("TimeRem", 900);
                 PlayerPrefs.SetFloat("TimeInc", 0);
             }
 
